@@ -1,7 +1,6 @@
 <?php
-	include("conexao.php");
-	$consulta = "SELECT * FROM produto_servico";
-	$con = $mysqli->query($consulta) or die($mysqli->error);
+	$response = file_get_contents("http://portaldevozbb.com.br/webservice/pvbb.php?portal=pvbb&modulo=chamados");
+	$content  = json_decode($response);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,13 +30,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php while($dado = $con->fetch_array()){ ?>
+							<?php foreach ($content as $dado) { ?>
 								<tr>
-									<td><?php echo $dado["ID_PRODUTO_SERVICO"]; ?></td>
+									<td><?php echo $dado->ID_PRODUTO_SERVICO; ?></td>
 									<td></td>
-									<td><?php echo $dado["DES_PRODUTO_SERVICO"]; ?></td>
-									<td><?php echo $dado["VALOR"]; ?></td>
-									<td>Voz</td>
+									<td><?php echo $dado->DES_PRODUTO_SERVICO; ?></td>
+									<td><?php echo $dado->VALOR; ?></td>
+									<td><?php echo $dado->tipo_chamado; ?></td>
 									<td>Analógico</td>
 									<td></td>
 									
